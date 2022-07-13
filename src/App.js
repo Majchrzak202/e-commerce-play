@@ -3,10 +3,11 @@ import "./App.css";
 import Products from "./components/products/Products";
 import Navbar from "./components/navbar/navbar";
 import { commerce } from "./lib/Commerce";
+import Cart from "./components/cart/Cart";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [myCart, setCart] = useState({});
+  const [cart, setCart] = useState({});
 
   const fetchProducts = async () => {
     const response = await commerce.products.list();
@@ -18,12 +19,17 @@ function App() {
     setCart(response);
   };
 
-  const handleAddToCart = async (productId, quantity) => {
-    const item = await commerce.cart.add(productId, quantity);
-    setCart(item.cart)
+  const emptyCart = async () => {
+    const response = await commerce.cart.empty();
+    setCart(response.cart);
   };
 
-  console.log(myCart);
+  const handleAddToCart = async (productId, quantity) => {
+    const item = await commerce.cart.add(productId, quantity);
+    setCart(item.cart);
+  };
+
+  console.log(cart);
 
   useEffect(() => {
     fetchProducts();
@@ -32,7 +38,8 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Cart emptyCart={emptyCart} cart={cart} />
+      <Navbar totalItems={cart.total_items} />
       <Products products={products} handleAddToCart={handleAddToCart} />
     </div>
   );
