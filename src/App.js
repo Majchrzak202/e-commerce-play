@@ -29,6 +29,16 @@ function App() {
     setCart(item.cart);
   };
 
+  const handleRemoveFromCart = async (productId) => {
+    const item = await commerce.cart.remove(productId);
+    setCart(item.cart);
+  };
+
+  const handleUpdateQuantity = async (productId, productQuantity) => {
+    const item = await commerce.cart.update(productId,{quantity: productQuantity});
+    setCart(item.cart);
+  };
+
   console.log(cart);
 
   useEffect(() => {
@@ -38,7 +48,12 @@ function App() {
 
   return (
     <div className="App">
-      <Cart emptyCart={emptyCart} cart={cart} />
+      <Cart
+        updateQuantity={handleUpdateQuantity}
+        handleRemoveFromCart={handleRemoveFromCart}
+        emptyCart={emptyCart}
+        cart={cart}
+      />
       <Navbar totalItems={cart.total_items} />
       <Products products={products} handleAddToCart={handleAddToCart} />
     </div>
