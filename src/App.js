@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Products from "./components/products/Products";
-import Navbar from "./components/navbar/navbar";
+
 import { commerce } from "./lib/Commerce";
-import Cart from "./components/cart/Cart";
+
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar/navbar";
+import Products from "./components/products/Products";
+import Cart from "./components/cart/Cart";
+import Checkout from "./components/checkout/Checkout";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -68,6 +71,7 @@ function App() {
             />
           }
         ></Route>
+        <Route path="/checkout" element={<Checkout/>}></Route>
       </Routes>
     </div>
   );
