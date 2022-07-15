@@ -12,17 +12,23 @@ import { ShoppingCart } from "@material-ui/icons";
 import logo from "../assets/logo.jpg";
 import useStyles from "./styles";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Navbar = ({ totalItems }) => {
   const classes = useStyles();
+  const location = useLocation()
 
   return (
     <>
       <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
-          
-          <Typography variant="h6" className={classes.title} color="inherit">
-          <Link style={{textDecoration: 'none'}} to='/'>
+          <Typography
+            component={Link}
+            to="/"
+            variant="h6"
+            className={classes.title}
+            color="inherit"
+          >
             <img
               src={logo}
               alt="commerce.js"
@@ -30,19 +36,27 @@ const Navbar = ({ totalItems }) => {
               className={classes.img}
             />
             Outstanding E-shop!
-            </Link>
           </Typography>
-          
+
           <div className={classes.grow} />
+          {location.pathname === '/' && 
           <div className={classes.button}>
-            <Link to='/cart'>
-            <IconButton  aria-label="show cart" color="inherit">
-              <Badge overlap="rectangular" badgeContent={totalItems} color="secondary">
+            <Link to="/cart"> </Link>
+            <IconButton
+              component={Link}
+              to="/cart"
+              aria-label="show cart"
+              color="inherit"
+            >
+              <Badge
+                overlap="rectangular"
+                badgeContent={totalItems}
+                color="secondary"
+              >
                 <ShoppingCart />
               </Badge>
             </IconButton>
-            </Link>
-          </div>
+          </div> }
         </Toolbar>
       </AppBar>
     </>
